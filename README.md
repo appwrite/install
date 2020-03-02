@@ -5,5 +5,5 @@ CLI Tool for easy installation of a self-hosted Appwrite server. The installatio
 ## Installation
 
 ```bash
-composer install
+composer update --ignore-platform-reqs --optimize-autoloader --no-plugins --no-scripts --prefer-dist
 ```

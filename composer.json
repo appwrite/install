@@ -13,7 +13,7 @@
         "php": ">=7.4.0",
         "ext-curl": "*",
         "ext-json": "*",
-        "utopia-php/cli": "master",
+        "utopia-php/cli": "master"
     },
     "require-dev": {
         "phpunit/phpunit": "^7.0"
