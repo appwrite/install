@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "23271696af4443798e514fb087f4b370",
+    "content-hash": "57408063dbdda02cddee56a4754e732c",
     "packages": [
         {
             "name": "utopia-php/cli",
