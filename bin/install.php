@@ -17,16 +17,16 @@ $cli
     ->task('start')
     ->desc('Install Appwrite')
     ->param('source', 'https://appwrite.io', function() {return new URL();}, 'Installation source', true)
-    ->param('hostname', 'localhost', function() {return new Domain();}, 'Installation domain', true)
+    ->param('domain', 'localhost', function() {return new Domain();}, 'Installation domain', true)
     ->param('httpPort', 80, function() {return new Range(0, 65535);}, 'Installation HTTP port', true)
     ->param('httpsPort', 443, function() {return new Range(0, 65535);}, 'Installation HTTPS port', true)
     ->param('cname', 'localhost', function() {return new Domain();}, 'Installation CNAME target', true)
-    ->action(function ($source, $hostname, $httpPort, $httpsPort, $cname) {
+    ->action(function ($source, $domain, $httpPort, $httpsPort, $cname) {
         Console::success('Starting Appwrite installation...');
 
-        if(!empty($hostname)) {
-            $hostname = Console::confirm('Choose your server hostname: (default: \'localhost\')');
-            $hostname = ($hostname) ? $hostname : 'localhost';
+        if(!empty($domain)) {
+            $domain = Console::confirm('Choose your server hostname: (default: \'localhost\')');
+            $domain = ($domain) ? $domain : 'localhost';
         }
 
         if(!empty($httpPort)) {
@@ -40,12 +40,12 @@ $cli
         }
         
         if(!empty($cname)) {
-            $cname = Console::confirm('Choose a CNAME target for your custom domains: (default: \''.$hostname.'\')');
-            $cname = ($cname) ? $cname : $hostname;
+            $cname = Console::confirm('Choose a CNAME target for your custom domains: (default: \''.$domain.'\')');
+            $cname = ($cname) ? $cname : $domain;
         }
         
         $composeUrl = $source.'/docker-compose.yml?'.http_build_query([
-            'hostname' => $hostname,
+            'domain' => $domain,
             'httpPort' => $httpPort,
             'httpsPort' => $httpPort,
             'cname' => $cname,
@@ -56,7 +56,12 @@ $cli
         if(!$composeFile) {
             throw new Exception('Failed to fetch Docker Compose file');
         }
+        
+        if(!file_put_contents('/install/data/docker-compose.yml', $composeFile)) {
+            throw new Exception('Failed to save Docker Compose file');
+        }
 
+        shell_exec('docker-compose -f /install/data/docker-compose.yml up -d');
     });
 
 $cli->run();

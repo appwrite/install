@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  
+  install:
+    build:
+      context: .
+    restart: unless-stopped
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./data:/install/data:rw
+    environment:
+      - _APP_ENV=production
+
+# docker build --no-cache --tag appwrite/install:0.1.0 .
+# docker run -it --rm --volume /var/run/docker.sock:/var/run/docker.sock --volume "$(pwd)"/data:/install/data:rw appwrite/install:0.1.0
