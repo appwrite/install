@@ -1,4 +1,6 @@
-FROM ubuntu:18.04 AS builder
+FROM ubuntu:18.04
+
+LABEL maintainer="team@appwrite.io"
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -18,4 +20,4 @@ COPY . /install
 
 RUN ls -ll /install/data
 
-CMD [ "php", "/install/bin/install.php", "start" ]
+CMD [ "php", "/install/bin/installer", "start" ]

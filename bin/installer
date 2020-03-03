@@ -57,11 +57,11 @@ $cli
             throw new Exception('Failed to fetch Docker Compose file');
         }
         
-        if(!file_put_contents('/install/data/docker-compose.yml', $composeFile)) {
+        if(!file_put_contents('/install/appwrite/docker-compose.yml', $composeFile)) {
             throw new Exception('Failed to save Docker Compose file');
         }
 
-        shell_exec('docker-compose -f /install/data/docker-compose.yml up -d');
+        shell_exec('docker-compose -f /install/appwrite/docker-compose.yml up -d');
     });
 
 $cli->run();

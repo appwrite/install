@@ -2,8 +2,17 @@
 
 CLI Tool for easy installation of a self-hosted Appwrite server. The installation tool takes your input and creates a custom docker-compose file for your Appwrite installation.
 
-## Installation
+## Install
 
 ```bash
-composer update --ignore-platform-reqs --optimize-autoloader --no-plugins --no-scripts --prefer-dist
+docker run -it --rm \
+    --volume /var/run/docker.sock:/var/run/docker.sock \
+    --volume "$(pwd)"/appwrite:/install/appwrite:rw \
+    appwrite/install:0.1.0
+```
+
+## Build
+
+```bash
+docker build --no-cache --tag appwrite/install:0.1.0 .
 ```

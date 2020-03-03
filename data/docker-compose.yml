@@ -1,0 +1,93 @@
+version: "3"
+
+services:
+    appwrite:
+        image: appwrite/appwrite
+        restart: unless-stopped
+        networks:
+        - appwrite
+        volumes:
+        - appwrite-uploads:/storage/uploads:rw
+        - appwrite-cache:/storage/cache:rw
+        ports:
+        - "80:80"
+        depends_on:
+        - mariadb
+        - redis
+        - smtp
+        - clamav
+        - influxdb
+        - telegraf
+        environment:
+        - _APP_ENV=development
+        - _APP_OPENSSL_KEY_V1=your-secret-key
+        - _APP_REDIS_HOST=redis
+        - _APP_REDIS_PORT=6379
+        - _APP_DB_HOST=mariadb
+        - _APP_DB_PORT=3306
+        - _APP_DB_SCHEMA=appwrite
+        - _APP_DB_USER=user
+        - _APP_DB_PASS=password    
+        - _APP_INFLUXDB_HOST=influxdb
+        - _APP_INFLUXDB_PORT=8086
+        - _APP_STATSD_HOST=telegraf
+        - _APP_STATSD_PORT=8125
+
+    mariadb:
+        image: appwrite/mariadb:1.0.1
+        restart: unless-stopped
+        networks:
+        - appwrite
+        volumes:
+        - appwrite-db:/var/lib/mysql:rw
+        environment:
+        - MYSQL_ROOT_PASSWORD=rootsecretpassword
+        - MYSQL_DATABASE=appwrite
+        - MYSQL_USER=user
+        - MYSQL_PASSWORD=password
+
+    smtp:
+        image: appwrite/smtp:1.0.0
+        restart: unless-stopped
+        networks:
+        - appwrite
+        environment:
+        - MAILNAME=appwrite
+        - RELAY_NETWORKS=:192.168.0.0/24:10.0.0.0/16
+
+    clamav:
+        image: appwrite/clamav:1.0.7
+        restart: unless-stopped
+        networks:
+        - appwrite
+        volumes:
+        - appwrite-uploads:/storage/uploads
+        
+    redis:
+        image: redis:5.0
+        restart: unless-stopped
+        networks:
+        - appwrite
+
+    influxdb:
+        image: influxdb:1.6
+        restart: unless-stopped
+        networks:
+        - appwrite
+        volumes:
+        - appwrite-influxdb:/var/lib/influxdb:rw
+
+    telegraf:
+        image: appwrite/telegraf:1.0.0
+        restart: unless-stopped
+        networks:
+        - appwrite
+
+networks:
+    appwrite:
+      
+volumes:
+    appwrite-db:
+    appwrite-cache:
+    appwrite-uploads:
+    appwrite-influxdb:
