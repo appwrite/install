@@ -10,7 +10,7 @@ git reset --hard origin/master
 
 echo 'Starting build...'
 
-composer update --ignore-platform-reqs --optimize-autoloader --no-plugins --no-scripts --prefer-dist
+composer update --ignore-platform-reqs --optimize-autoloader --no-plugins --no-scripts --prefer-dist --no-dev
 
 docker build --tag appwrite/install:"$1" .
 
