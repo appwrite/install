@@ -22,4 +22,4 @@ COPY . /install
 
 RUN ls -ll /install/data
 
-CMD [ "php", "/install/bin/installer", "start", "--version=${version}" ]
+CMD [ "sh", "-c", "php /install/bin/installer start --version=${version}" ]
