@@ -26,9 +26,6 @@ $cli
     ->action(function ($version, $source, $domain, $httpPort, $httpsPort, $target) {
         Console::success('Starting Appwrite installation...');
 
-        var_dump($version);
-        exit();
-        
         if(!empty($domain)) {
             $domain = Console::confirm('Choose your server hostname: (default: \'localhost\')');
             $domain = ($domain) ? $domain : 'localhost';
