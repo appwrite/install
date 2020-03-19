@@ -47,7 +47,7 @@ $cli
         $composeUrl = $source.'/docker-compose.yml?'.http_build_query([
             'domain' => $domain,
             'httpPort' => $httpPort,
-            'httpsPort' => $httpPort,
+            'httpsPort' => $httpsPort,
             'target' => $target,
         ]);
 
