@@ -10,20 +10,25 @@ use Utopia\CLI\Console;
 use Utopia\Validator\Domain;
 use Utopia\Validator\Range;
 use Utopia\Validator\URL;
+use Utopia\Validator\Text;
 
 $cli = new CLI();
 
 $cli
     ->task('start')
     ->desc('Install Appwrite')
+    ->param('version', 'latest', function() {return new Text(10);}, 'Installation version', true)
     ->param('source', 'https://appwrite.io', function() {return new URL();}, 'Installation source', true)
     ->param('domain', 'localhost', function() {return new Domain();}, 'Installation domain', true)
     ->param('httpPort', 80, function() {return new Range(0, 65535);}, 'Installation HTTP port', true)
     ->param('httpsPort', 443, function() {return new Range(0, 65535);}, 'Installation HTTPS port', true)
     ->param('target', 'localhost', function() {return new Domain();}, 'Installation CNAME target', true)
-    ->action(function ($source, $domain, $httpPort, $httpsPort, $target) {
+    ->action(function ($version, $source, $domain, $httpPort, $httpsPort, $target) {
         Console::success('Starting Appwrite installation...');
 
+        var_dump($version);
+        exit();
+        
         if(!empty($domain)) {
             $domain = Console::confirm('Choose your server hostname: (default: \'localhost\')');
             $domain = ($domain) ? $domain : 'localhost';
@@ -45,6 +50,7 @@ $cli
         }
         
         $composeUrl = $source.'/docker-compose.yml?'.http_build_query([
+            'version' => $version,
             'domain' => $domain,
             'httpPort' => $httpPort,
             'httpsPort' => $httpsPort,
