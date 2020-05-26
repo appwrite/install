@@ -1,7 +1,4 @@
-#!/bin/bash bash
-
-RED='\033[0;31m'
-NC='\033[0m' # No Color
+#!/bin/bash
 
 echo "Updating git repository $1 / $2"
 
