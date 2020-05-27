@@ -8,11 +8,11 @@ CLI Tool for easy installation of a self-hosted Appwrite server. The installatio
 docker run -it --rm \
     --volume /var/run/docker.sock:/var/run/docker.sock \
     --volume "$(pwd)"/appwrite:/install/appwrite:rw \
-    appwrite/install:0.1.0
+    appwrite/install:latest
 ```
 
 ## Build
 
 ```bash
-docker build --no-cache --tag appwrite/install:0.1.0 .
+docker build --no-cache --tag appwrite/install:latest .
 ```
