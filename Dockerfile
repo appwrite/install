@@ -2,7 +2,9 @@ FROM ubuntu:20.04
 
 LABEL maintainer="team@appwrite.io"
 
-ENV version latest
+ENV version latest \
+    TZ=Asia/Tel_Aviv \
+    PHP_VERSION=7.4
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
