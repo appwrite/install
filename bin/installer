@@ -64,7 +64,12 @@ $cli
             throw new Exception('Failed to save Docker Compose file');
         }
 
-        shell_exec('docker-compose -f /install/appwrite/docker-compose.yml up -d');
+        $output = shell_exec('docker-compose -f /install/appwrite/docker-compose.yml up -d');
+        if ($output != NULL) {
+            Console::error("Failed to install Appwrite dockers");
+        } else {
+            Console::success("Appwrite installed successfully");
+        }
     });
 
 $cli->run();
