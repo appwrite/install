@@ -10,7 +10,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN \
     echo http://dl-cdn.alpinelinux.org/alpine/v3.12/main > /etc/apk/repositories \
 	echo http://dl-cdn.alpinelinux.org/alpine/v3.12/community >> /etc/apk/repositories \
-	echo https://dl.bintray.com/php-alpine/v3.12/php-7.4 >> /etc/apk/repositories
+	echo https://dl.bintray.com/php-alpine/v3.11/php-7.4/ >> /etc/apk/repositories
 
 RUN \
     apk update && apk add --no-cache wget curl docker php php-mbstring
