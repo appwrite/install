@@ -1,19 +1,19 @@
-FROM ubuntu:20.04
+FROM alpine:3.12
 
 LABEL maintainer="team@appwrite.io"
 
 ENV version latest \
-    TZ=Asia/Tel_Aviv \
-    PHP_VERSION=7.4
+    TZ=Asia/Tel_Aviv
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 RUN \
-  apt-get update && \
-  apt-get install -y --no-install-recommends --no-install-suggests software-properties-common && \ 
-  LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
-  apt-get install -y --no-install-recommends --no-install-suggests wget curl docker.io php$PHP_VERSION php$PHP_VERSION-mbstring && \
-  rm -rf /var/lib/apt/lists/*
+    echo http://dl-cdn.alpinelinux.org/alpine/v3.12/main > /etc/apk/repositories \
+	echo http://dl-cdn.alpinelinux.org/alpine/v3.12/community >> /etc/apk/repositories \
+	echo https://dl.bintray.com/php-alpine/v3.12/php-7.4 >> /etc/apk/repositories
+
+RUN \
+    apk update && apk add --no-cache wget curl docker php php-mbstring
   
 RUN curl -L https://github.com/docker/compose/releases/download/1.25.4/docker-compose-`uname -s`-`uname -m` -o /usr/local/bin/docker-compose && \
     chmod +x /usr/local/bin/docker-compose
